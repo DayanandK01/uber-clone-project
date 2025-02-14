@@ -7,8 +7,11 @@ const {body} = require("express-validator");
 // userController to add the logic to a particular route (here user routes)
 const userController = require("../controllers/user.controller.js");
 
+// middle ware to authenticate logged-in user
+const authMiddleware = require("../middlewares/auth.middleware.js");
 
-// post register routes
+
+// post register route
 router.post("/register",
     // validating user entered data using express-validator module
     [
@@ -20,6 +23,22 @@ router.post("/register",
 // using registerUser logic from userController
 userController.registerUser
 );
+
+
+// post login route
+router.post("/login",
+    [
+        body("email").isEmail().withMessage("Invalid email"),
+        body('password').isLength({min:6}).withMessage("Password is incorrect")
+    ],
+    userController.loginUser
+);
+
+// get profile route
+router.get("/profile", authMiddleware.authUser, userController.getUserProfile);
+
+// logout user
+router.get("/logout", authMiddleware.authUser, userController.logoutUser);
 
 // exporting router as a whole
 module.exports = router;
