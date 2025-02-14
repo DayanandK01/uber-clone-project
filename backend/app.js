@@ -1,33 +1,34 @@
-// requiring dotenv, express and cors modules
-const dotenv = require("dotenv");
-
-// config dotenv before using values present in .env files 
-// (note: we can access values in .env file in any files if we config it)
+const dotenv = require('dotenv');
 dotenv.config();
-const express = require("express");
-const cors = require("cors");
-
-// initializing express app
+const express = require('express');
+const cors = require('cors');
 const app = express();
+const cookieParser = require('cookie-parser');
+const connectToDb = require('./dataBase/connectToDB.js');
+const userRoutes = require('./routes/user.routes');
+const captainRoutes = require('./routes/captain.routes');
+// const mapsRoutes = require('./routes/maps.routes');
+// const rideRoutes = require('./routes/ride.routes');
 
-// require cookie-parser
-const cookieParser = require("cookie-parser");
+connectToDb();
 
-// require connectToDB function and userRoutes 
-const connectToDB = require("./dataBase/connectToDB.js");
-const userRoutes = require("./routes/user.routes.js");
-
-// calling connectToDB function which helps to connect server to mongodb
-connectToDB();
-
-// built-in middlewares to handle user sent data
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// custom built middlewares to handle user routes
-app.use("/user", userRoutes);
 
-// exports app
+
+app.get('/', (req, res) => {
+    res.send('Hello World');
+});
+
+app.use('/users', userRoutes);
+app.use('/captains', captainRoutes);
+// app.use('/maps', mapsRoutes);
+// app.use('/rides', rideRoutes);
+
+
+
+
 module.exports = app;
