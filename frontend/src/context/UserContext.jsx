@@ -1,18 +1,26 @@
-// import React from 'react'
-import { createContext } from "react"
+// src/context/UserContext.jsx
+import { useState } from "react";
+import PropTypes from "prop-types";
+import { UserDataContext } from "./UserDataContext"; // ✅ Import the separated context
 
-export const UserDataContext = createContext()
+const UserContext = ({ children }) => {
+  const [user, setUser] = useState({
+    email: "",
+    fullName: {
+      firstName: "",
+      lastName: "",
+    },
+  });
 
-const UserContext = ({children}) => {
-
-    const user = "dayanand"
   return (
-    <div>
-        <UserDataContext.Provider value={user}>
-            {children}
-        </UserDataContext.Provider>
-    </div>
-  )
-}
+    <UserDataContext.Provider value={[user, setUser]}>
+      {children}
+    </UserDataContext.Provider>
+  );
+};
 
-export default UserContext
+UserContext.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
+export default UserContext;

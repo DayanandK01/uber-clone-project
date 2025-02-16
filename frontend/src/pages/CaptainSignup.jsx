@@ -16,7 +16,7 @@ const CaptainSignup = () => {
             e.preventDefault()
     
             setCaptainData({
-                username:{
+                fullName:{
                     firstName:firstName,
                     lastName:lastName
                 },
@@ -42,7 +42,7 @@ const CaptainSignup = () => {
                 <form onSubmit={(e) =>{
                     submitHandler(e)
                 }} action="">
-                    <h3 className="text-lg font-medium mb-2">What is your name</h3>
+                    <h3 className="text-lg font-medium mb-2">What`s our Captain`s name</h3>
                     <div className="flex gap-4 mb-5">
                         <input 
                         className="bg-[#eeeeee] rounded px-4 py-2 border w-1/2 text-lg placeholder:text-base"
@@ -70,7 +70,7 @@ const CaptainSignup = () => {
                     </div>
 
         
-                    <h3 className="text-lg font-medium mb-2">What is your email</h3>
+                    <h3 className="text-lg font-medium mb-2">What`s our Captain`s email</h3>
                     <input 
                     className="bg-[#eeeeee] mb-5 rounded px-4 py-2 border w-full text-lg placeholder:text-base"
                     
