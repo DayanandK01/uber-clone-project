@@ -13,12 +13,15 @@ const blacklistTokenModel = require("../models/blacklistToken.model.js");
 
 // exporting registerUser function 
 module.exports.registerUser = async (req, res, next)=>{
+
+    console.log("received req body", req.body);
     
     // storing errors present in the request 
     const errors = validationResult(req);
 
     // if there is an error then return the user
     if(!errors.isEmpty()){
+        console.log("Validation errors:", errors.array());
         return res.status(400).json({errors: errors.array()});
     }
 
@@ -49,6 +52,8 @@ module.exports.registerUser = async (req, res, next)=>{
 
     // call generateAuthToken function from userModel to generate a token when a user registers   
     const token = user.generateAuthToken();
+
+    console.log("Sending response:", { token, user }); 
 
 
     // send a success status along with the token and the created user
